@@ -9,12 +9,14 @@ def func(request):
         {"name":"Rohit Sharma","age":17}
     ]
     print(peoples[2])
-    return render(request,"index.html",context={"peopless":peoples})
+    return render(request,"index.html",context={'page':'Home',"peopless":peoples})
 
 def func1(request):
     print("")
-    return render(request,"contact.html")
+    context = {'page':'contact'}
+    return render(request,"contact.html",context)
 
 def func2(request):
     print("")
-    return render(request,"about.html")
+    context = {'page':'about'}
+    return render(request,"about.html",context)

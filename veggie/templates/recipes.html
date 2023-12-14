@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container">
+    <for class="card p-3 shadow-lg" style="margin-top: 2%;">
+        <h2 style="text-align: center;">Add Receipe</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Receipe</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+          <textarea class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+            <input type="file" class="form-control">
+          </div>
+        <button type="submit" class="btn btn-success">Add receipe</button>
+      </form>
+</div>
+{% endblock %}

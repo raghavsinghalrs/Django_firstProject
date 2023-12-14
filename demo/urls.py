@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from home.views import *
+from veggie.views import *
 urlpatterns = [
     path('',func,name="home"),
+    path('receipes/',reciepes,name='recipes'),
     path('contact/',func1,name="contact"),
     path('about/',func2,name="about"),
     path('admin/', admin.site.urls),
