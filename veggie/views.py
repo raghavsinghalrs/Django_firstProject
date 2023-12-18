@@ -13,6 +13,7 @@ def receipes(request):
         data = request.POST
         reciepe_images = request.FILES.get('reciepe_images')
         reciepe_name = data.get('reciepe_name')
+        reciepe_addby = request.user.username
         reciepe_desc = data.get('reciepe_desc')
         print("name :",reciepe_name) 
         print("description :",reciepe_desc)
@@ -21,6 +22,7 @@ def receipes(request):
         reciepe.objects.create(
             reciepe_name=reciepe_name,
             reciepe_desc=reciepe_desc,
+            reciepe_addby=reciepe_addby,
             reciepe_images=reciepe_images,
         )
         return redirect("/receipes/")
@@ -102,7 +104,7 @@ def register(request):
             user.set_password(password)
             user.save()
             messages.info(request, "You are successfully registered")
-            return redirect("/register/")
+            return redirect("/login/")
         else:
             # Handle the case where username is not provided
             return render(request, "register.html", {"error_message": "Username is required."})

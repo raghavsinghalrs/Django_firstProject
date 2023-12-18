@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block start %}
-<h3>Hey,"{{request.user.first_name}}"</h3>
+<div class="container">
+<h3>Hey, {{request.user.first_name}}</h3>
+</div>
 <div class="container">
     <form class="card p-3 shadow-lg" style="margin-top: 2%;" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -18,32 +20,35 @@
             <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
             <input name= "reciepe_images" type="file" class="form-control">
           </div>
-        <button type="submit" class="btn btn-success">Add receipe</button>
+          <div>
+            <button style="width: 120px; align-items: center;"  type="submit" class="btn btn-success">Add receipe</button>
+          </div>
       </form>
       <div class="mt-5">
-        <div class="mx-auto col-6">
-          <form>
-            <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"><b>Search Receipe</b></label>
-          <input name="search" id="searchitem" type="text" class="form-control" placeholder="Type receipe name">
-          </div>
-          <button type="submit"class="btn btn-primary">Search</button>
-          <script>
-            document.getElementById('searchitem').value = "{{placeholder}}";
-          </script>
-          </form>
+        <div class="container">
           </div>
         </div>
       </div>
       </script>
       <br><br>
       <div class="container">
+        <form>
+          <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label"><b>Search Receipe</b></label>
+        <input name="search" id="searchitem" type="text" class="form-control" placeholder="Type receipe name">
+        </div>
+        <button type="submit"class="btn btn-primary">Search</button>
+        <script>
+          document.getElementById('searchitem').value = "{{placeholder}}";
+        </script>
+        </form>
       <table class="table">
         <thead>
           <tr>
             <th scope="col">S.No</th>
             <th scope="col">Receipe Name</th>
             <th scope="col">Receipe Description</th>
+            <th scope="col">Added by</th>
             <th scope="col">Image</th>
             <th scope="col">Actions</th>
           </tr>
@@ -55,12 +60,15 @@
             <th scope="row">{{forloop.counter}}</th>
             <td>{{i.reciepe_name}}</td>
             <td>{{i.reciepe_desc}}</td>
+            <td>{{i.reciepe_addby}}</td>
             <td>
-              <img src="/media/{{i.reciepe_images}}" style="height: 100px; width: 100px;">
+              <img src="/media/{{i.reciepe_images}}" style="height: 100px; width: \100px;">
             </td>
             <td>
-              <a href="/delete-receipe/{{i.id}}/" class="btn btn-danger">Delete</a> <br>
-              <a href="/update-receipe/{{i.id}}/" class="btn btn-success" style="margin-top: 2%;">Edit</a>
+              <div style="display: flex;">
+              <a href="/delete-receipe/{{i.id}}/"><i class="bi bi-trash3-fill" style="color: black; "></i></a> <br>
+              <a href="/update-receipe/{{i.id}}/"><i class="bi bi-pen-fill" style="color: black;"></i></a>
+              </div>
             </td>
           </tr>
           {% endfor %}
