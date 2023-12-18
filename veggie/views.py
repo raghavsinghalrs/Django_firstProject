@@ -3,8 +3,11 @@ from .models import *
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
-# Create your views here.
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
+@login_required(login_url="/login/")
 def receipes(request):
     if request.method == "POST":
         data = request.POST
@@ -31,12 +34,13 @@ def receipes(request):
     context = {'receipes': query,'placeholder':placeholder}
     return render(request,"recipes.html",context)
 
+@login_required(login_url="/login/")
 def delete_receipe(request,id):
     query = reciepe.objects.get(id=id)
     query.delete()
     return redirect("/receipes/")
 
-
+@login_required(login_url="/login/")
 def update_receipe(request,id):
     query = reciepe.objects.get(id=id)
     if request.method == "POST":
@@ -54,8 +58,29 @@ def update_receipe(request,id):
     context = {'receipes':query}
     return render(request,"update_reciepes.html",context)
 
-def login(request):
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not User.objects.filter(username = username).exists():
+            messages.error(request,"Invalid username")
+            return redirect('/login/')
+        user = authenticate(username = username, password=password)
+
+        if user is None:
+            messages.info(request, 'Invalid Password')
+            return redirect('/login/')
+        
+        else:
+            login(request,user)
+            return redirect('/receipes/')
     return render(request,"login.html")
+
+@login_required(login_url="/login/")
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
 
 def register(request):
     if request.method == 'POST':
@@ -66,7 +91,7 @@ def register(request):
 
         user = User.objects.filter(username = username)
         if user.exists():
-            messages.info(request, "Username exists")
+            messages.info(request, "Username already taken")
             return redirect('/register/')
         if username is not None:
             user = User.objects.create(

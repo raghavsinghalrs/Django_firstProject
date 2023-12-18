@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block start %}
-
+<h3>Hey,"{{request.user.first_name}}"</h3>
 <div class="container">
     <form class="card p-3 shadow-lg" style="margin-top: 2%;" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -56,7 +56,7 @@
             <td>{{i.reciepe_name}}</td>
             <td>{{i.reciepe_desc}}</td>
             <td>
-              <img src="/media/{{i.reciepe_images}}" style="height: 100px;">
+              <img src="/media/{{i.reciepe_images}}" style="height: 100px; width: 100px;">
             </td>
             <td>
               <a href="/delete-receipe/{{i.id}}/" class="btn btn-danger">Delete</a> <br>
